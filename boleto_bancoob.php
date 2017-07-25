@@ -78,30 +78,11 @@ $convenio = "56235"; //Número do convênio indicado no frontend
 $NossoNumero = formata_numdoc($IdDoSeuSistemaAutoIncremento,7);
 $qtde_nosso_numero = strlen($NossoNumero);
 $sequencia = formata_numdoc($agencia,4).formata_numdoc(str_replace("-","",$convenio),10).formata_numdoc($NossoNumero,7);
-$cont=0;
 $calculoDv = '';
+	$constante = array(3,1,9,7);
 	for($num=0;$num<=strlen($sequencia);$num++)
 	{
-		$cont++;
-		if($cont == 1)
-		{
-			// constante fixa Sicoob » 3197 
-			$constante = 3;
-		}
-		if($cont == 2)
-		{
-			$constante = 1;
-		}
-		if($cont == 3)
-		{
-			$constante = 9;
-		}
-		if($cont == 4)
-		{
-			$constante = 7;
-			$cont = 0;
-		}
-		$calculoDv = $calculoDv + (substr($sequencia,$num,1) * $constante);
+		$calculoDv = $calculoDv + (substr($sequencia,$num,1) * $constante[$num%4]);
 	}
 $Resto = $calculoDv % 11;
 $Dv = 11 - $Resto;
